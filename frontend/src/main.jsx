@@ -13,13 +13,16 @@ import Home from "./Pages/Home.jsx";
 import Register from "./Pages/Register.jsx";
 import Login from "./Pages/Login.jsx";
 import store from "./Redux/store.js";
+import PrivateRoute from "./Components/PrivateRoute.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route index={true} path="/" element={<Home />} />
-      <Route path="/signup" element={<Register />} />
-      <Route path="/signin" element={<Login />} />
+      <Route path="" element={<PrivateRoute />}>
+        <Route path="/signup" element={<Register />} />
+        <Route path="/signin" element={<Login />} />
+      </Route>
     </Route>
   )
 );
