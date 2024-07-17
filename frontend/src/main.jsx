@@ -14,6 +14,8 @@ import Register from "./Pages/Register.jsx";
 import Login from "./Pages/Login.jsx";
 import store from "./Redux/store.js";
 import PrivateRoute from "./Components/PrivateRoute.jsx";
+import MyTodos from "./Pages/MyTodos.jsx";
+import PrivateRouteLoggedInUser from "./Components/PrivateRouteLoggedInUser.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -22,6 +24,9 @@ const router = createBrowserRouter(
       <Route path="" element={<PrivateRoute />}>
         <Route path="/signup" element={<Register />} />
         <Route path="/signin" element={<Login />} />
+      </Route>
+      <Route path="" element={<PrivateRouteLoggedInUser />}>
+        <Route path="/mytodos" element={<MyTodos />} />
       </Route>
     </Route>
   )
