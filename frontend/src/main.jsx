@@ -16,6 +16,7 @@ import store from "./Redux/store.js";
 import PrivateRoute from "./Components/PrivateRoute.jsx";
 import MyTodos from "./Pages/MyTodos.jsx";
 import PrivateRouteLoggedInUser from "./Components/PrivateRouteLoggedInUser.jsx";
+import { Profile } from "./Pages/Profile.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -27,6 +28,7 @@ const router = createBrowserRouter(
       </Route>
       <Route path="" element={<PrivateRouteLoggedInUser />}>
         <Route path="/mytodos" element={<MyTodos />} />
+        <Route path="/profile" element={<Profile />} />
       </Route>
     </Route>
   )

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { setCredentials } from "./authSlice";
+import { clearCredentials, setCredentials } from "./authSlice";
 
 export const signin = createAsyncThunk(
   "user/signin",
@@ -51,6 +51,21 @@ export const logout = createAsyncThunk("user/logout", async (navigate) => {
   }
 });
 
+export const updateUser = createAsyncThunk(
+  "user/update",
+  async (user, { dispatch }) => {
+    axios.defaults.withCredentials = true;
+    try {
+      const { data } = await axios.put("http://localhost:5000/api/users", user);
+      toast.success("User Updated");
+      dispatch(setCredentials(data));
+      return data;
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: "user",
   initialState: {},
@@ -85,6 +100,17 @@ const userSlice = createSlice({
       state.logoutedUser = action.payload;
     });
     builder.addCase(logout.rejected, (state) => {
+      state.loading = false;
+    });
+    ///////////////////////////////////////////////////////////////////
+    builder.addCase(updateUser.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(updateUser.fulfilled, (state, action) => {
+      state.loading = false;
+      state.updatedUser = action.payload;
+    });
+    builder.addCase(updateUser.rejected, (state) => {
       state.loading = false;
     });
   },

@@ -15,7 +15,7 @@ const MyTodos = () => {
   return (
     <div className=" mt-24">
       {allTodos
-        .filter((el) => el.createdBy._id == userInfo.id)
+        ?.filter((el) => el.createdBy._id == userInfo.id)
         .map((el) => (
           <Todo el={el} key={el._id} />
         ))}

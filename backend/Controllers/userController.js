@@ -67,4 +67,25 @@ const logoutUser = asyncHandler(async (req, res) => {
   res.status(200).json({ messsage: "User Logged Out" });
 });
 
-export { registerUser, authUser, logoutUser };
+const updateUser = asyncHandler(async (req, res) => {
+  const { firstName, lastName, email, password, age, photo } = req.body;
+  try {
+    const user = await User.findById(req.user._id).select("+password");
+    if (user) {
+      user.firstName = firstName || user.firstName;
+      user.lastName = lastName || user.lastName;
+      user.email = email || user.email;
+      user.password = password || user.password;
+      user.age = age || user.age;
+      user.photo = photo || user.photo;
+
+      const updatedUser = await user.save();
+      res.status(200).json(updatedUser);
+    }
+  } catch (error) {
+    res.status(401);
+    throw new Error(error);
+  }
+});
+
+export { registerUser, authUser, logoutUser, updateUser };
